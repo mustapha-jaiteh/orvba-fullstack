@@ -14,7 +14,7 @@ const HomePageServices = () => {
             image1: Repair1,
             image2: Repair2,
             description:
-                "Emergency vehicle repair is a service that is provided by our team of experienced mechanics. We understand that every vehicle is unique and we take the time to understand your vehicle's needs before we start the repair process. Our team of experts will work with you to ensure that your vehicle is in top condition and ready for use.",
+                "Emergency vehicle repair is a service that is provided by our team of experienced mechanics. We understand that every vehicle is unique and we take the time to understand your vehicle's needs before we start the repair process. Our team of experts will work with you to ensure that your vehicle is fully repaired.",
         },
         {
             name: "Regular Vehicle mentainance",

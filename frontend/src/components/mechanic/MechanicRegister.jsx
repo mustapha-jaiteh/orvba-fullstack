@@ -13,7 +13,7 @@ const MechanicRegister = () => {
     const [formData, setFormData] = useState({
         id: null,
         img: null,
-        fullName: "",
+        name: "",
         email: "",
         phone: "",
         streetAddress: "",
@@ -22,7 +22,6 @@ const MechanicRegister = () => {
         certificationNumber: "",
         yearsOfExperience: "",
         specialization: "",
-
         username: "",
         password: "",
         confirmPassword: "",
@@ -51,7 +50,7 @@ const MechanicRegister = () => {
         setFormData({
             id: null,
             img: null,
-            fullName: "",
+            name: "",
             email: "",
             phone: "",
             streetAddress: "",
@@ -70,7 +69,7 @@ const MechanicRegister = () => {
     const validate = () => {
         const errors = {};
         if (!formData.img) errors.img = "profile picture is required";
-        if (!formData.fullName) errors.fullName = "Full Name is required";
+        if (!formData.name) errors.name = "Full Name is required";
         if (!formData.email) errors.email = "Email is required";
         if (!formData.phone) errors.phone = "Phone number is required";
         if (!formData.streetAddress)
@@ -105,7 +104,7 @@ const MechanicRegister = () => {
             const newEntry = {
                 id: formData.id,
                 img: reader.result,
-                fullName: formData.fullName,
+                name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
                 streetAddress: formData.streetAddress,
@@ -151,12 +150,12 @@ const MechanicRegister = () => {
                         <input
                             className="border border-slate-500 rounded-lg p-2 text-black"
                             type="text"
-                            name="fullName"
+                            name="name"
                             placeholder="full name"
-                            value={formData.fullName}
+                            value={formData.name}
                             onChange={handleChange}
                         />
-                        {errors.fullName && <span>{errors.fullName}</span>}
+                        {errors.name && <span>{errors.name}</span>}
                     </div>
                     <div className="email flex flex-col gap-2 text-start">
                         <label>Email:</label>
