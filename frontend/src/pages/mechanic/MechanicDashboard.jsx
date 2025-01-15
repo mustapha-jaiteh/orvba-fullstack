@@ -1,13 +1,13 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useAdminContext } from "../../contexts/AdminContext";
 import MechanicPages from "../../components/mechanic/MechanicPages";
 
 const MechanicDashboard = () => {
     const { mechanics, services } = useAdminContext();
 
-    const { id } = useParams(); // Get the id from the URL
-    const mechanic = mechanics.find((item) => item.id === parseInt(id));
+    // const { id } = useParams();
+    const mechanic = mechanics.find((item) => item.id === 1);
 
     //number of services in the last 6 months
     const sixMonthsAgo = new Date();
@@ -36,7 +36,7 @@ const MechanicDashboard = () => {
                             </h2>
                             <h3 className="text-center text-md font-bold m-2">
                                 The details on the card below will be shown to
-                                mechanic's clients too
+                                your clients
                             </h3>
                             <div className="card bg-gray-50 flex flex-row m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2 relative">
                                 <img
@@ -74,6 +74,18 @@ const MechanicDashboard = () => {
                                     </p>
                                 </div>
                             </div>
+                            <div className="card2 bg-gray-50 flex flex-col lg:flex-row items-center justify-center m-4  gap-2 shadow-2xl bg-transparent rounded-2xl shadow-slate-950 p-2 relative mt-12">
+                                <NavLink to="/new_requests">
+                                    <button className="bg-blue-600 hover:bg-blue-400 text-white rounded-lg px-4 py-2 font-bold m-3 w-40">
+                                        New requests
+                                    </button>
+                                </NavLink>
+                                <NavLink to="/mechanic_services">
+                                    <button className="bg-blue-600 hover:bg-blue-400 text-white rounded-lg px-4 py-2 font-bold m-3 w-40">
+                                        Service status
+                                    </button>
+                                </NavLink>
+                            </div>
                         </div>
                     </div>
 
@@ -82,8 +94,8 @@ const MechanicDashboard = () => {
                             Perfomance statistics:
                         </h4>
                         <h3 className="text-center text-md font-bold m-2">
-                            The details of the performance statistics is tracked
-                            and displayed here
+                            The details of your performance statistics are
+                            tracked and displayed here
                         </h3>
                         <div className="performance-stats grid grid-cols-1 lg:grid-cols-2 justify-between items-center">
                             <div className="service-status h-40 lg:h-48 bg-gradient-to-r from-slate-950 to-slate-700 text-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2  items-center justify-center">

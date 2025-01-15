@@ -25,6 +25,9 @@ const Services = ({ services }) => {
                                     License plate
                                 </th>
                                 <th className="p-2 border-x border-white">
+                                    Vehicle name
+                                </th>
+                                <th className="p-2 border-x border-white">
                                     Vehicle Owner
                                 </th>
                                 <th className="p-2 border-x border-white">
@@ -51,6 +54,9 @@ const Services = ({ services }) => {
                                         {service.licensePlate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
+                                        {service.vehicleName}
+                                    </td>
+                                    <td className="p-2 border-x border-gray-300">
                                         {service.vehicleOwner}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
@@ -63,7 +69,9 @@ const Services = ({ services }) => {
                                         {service.status}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        <Link to={`/services/${service.id}`}>
+                                        <Link
+                                            to={`/admin_dashboard/services/${service.id}`}
+                                        >
                                             <button className="bg-red-500 p-2 rounded-sm">
                                                 Details
                                             </button>

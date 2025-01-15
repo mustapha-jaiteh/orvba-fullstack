@@ -13,7 +13,8 @@ const Mechanics = ({ mechanics }) => {
                     <h1 className="text-center text-4xl my-2 py-4 font-bold">
                         Mechanics
                     </h1>
-                    <Link to="/mechanic_register">
+                    {/* TO DO-- change link to mechanic register */}
+                    <Link to="/mechanic_dashboard">
                         <button className="bg-blue-500 text-white rounded-lg px-4 py-2 font-bold m-3 w-52 gap-2 flex items-center justify-center text-center">
                             Add mechanic
                             <UserPlusIcon className="h-8 w-8" />
@@ -70,7 +71,9 @@ const Mechanics = ({ mechanics }) => {
                                         {mechanic.phone}
                                     </td>
                                     <td className="p-2 border-x border-gray-200">
-                                        <Link to={`/mechanics/${mechanic.id}`}>
+                                        <Link
+                                            to={`/admin_dashboard/mechanics/${mechanic.id}`}
+                                        >
                                             <button className="bg-red-500 p-2 rounded-sm w-20">
                                                 Details
                                             </button>

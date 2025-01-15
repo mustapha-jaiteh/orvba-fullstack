@@ -23,16 +23,30 @@ import MechanicDetails from "./src/pages/mechanic/MechanicDetails.jsx";
 import UserDetails from "./src/pages/user/UserDetails.jsx";
 import BookingDetails from "./src/pages/admin/BookingDetails.jsx";
 import ServiceDetails from "./src/pages/admin/ServiceDetails.jsx";
+//user pages
+import UserLayaout from "./src/components/user/UserLayout.jsx";
+import UserDashboard from "./src/pages/user/UserDashboard.jsx";
+import BookService from "./src/components/user/BookService.jsx";
+import PreviousRequests from "./src/components/user/PreviousRequests.jsx";
+import PreviousRequestDetails from "./src/components/user/PreviousRequestDetails.jsx";
+//mechanic pages
+import MechanicLayaout from "./src/components/mechanic/MechanicLayout.jsx";
+import MechanicDashboard from "./src/pages/mechanic/MechanicDashboard.jsx";
+import NewRequests from "./src/components/mechanic/NewRequests.jsx";
+import NewRequestDetails from "./src/components/mechanic/NewRequestDetails.jsx";
+import UpdateServices from "./src/components/mechanic/UpdateServices.jsx";
+import MechanicServices from "./src/components/mechanic/MechanicServices.jsx";
+import MechanicServiceDetails from "./src/components/mechanic/MechanicServiceDetails.jsx";
 
 const Router = () => {
     const { mechanics, users, bookings, services } = useAdminContext();
 
     // Define the routes
     const router = createBrowserRouter([
-        // {
-        //     path: "",
-        //     element: <Home />,
-        // },
+        {
+            path: "/",
+            element: <Home />,
+        },
         {
             path: "login",
             element: <Login />,
@@ -48,27 +62,27 @@ const Router = () => {
         },
 
         {
-            path: "/",
+            path: "/admin_dashboard",
             element: <AdminLayout />,
             children: [
-                { path: "/admin_dashboard", element: <Navigate to="/" /> },
-                { path: "/", element: <AdminDashboard /> },
+                // { path: "/admin_dashboard", element: <Navigate to="/" /> },
+                { path: "/admin_dashboard", element: <AdminDashboard /> },
 
                 {
-                    path: "/mechanics",
+                    path: "mechanics",
                     element: <Mechanics mechanics={mechanics} />,
                 },
                 {
-                    path: "/mechanics/:id",
+                    path: "mechanics/:id",
                     element: <MechanicDetails />,
                 },
-                { path: "/users", element: <Users users={users} /> },
+                { path: "users", element: <Users users={users} /> },
                 {
                     path: "users/:id",
                     element: <UserDetails />,
                 },
                 {
-                    path: "/bookings",
+                    path: "bookings",
                     element: <Bookings bookings={bookings} />,
                 },
                 {
@@ -76,7 +90,7 @@ const Router = () => {
                     element: <BookingDetails />,
                 },
                 {
-                    path: "/services",
+                    path: "services",
                     element: <Services services={services} />,
                 },
                 {
@@ -84,14 +98,49 @@ const Router = () => {
                     element: <ServiceDetails />,
                 },
                 {
-                    path: "/payments",
+                    path: "payments",
                     element: <Payments />,
                 },
-                { path: "/settings", element: <h2>Admin Settings</h2> },
+                // { path: "/settings", element: <h2>Admin Settings</h2> },
             ],
-            // loader: async () => {
-            //   return getMechanics();
-            // },
+        },
+        //user routes
+        {
+            path: "/user_dashboard",
+            element: <UserLayaout />,
+            children: [
+                // { path: "/user_dashboard", element: <Navigate to="/" /> },
+                { path: "/user_dashboard", element: <UserDashboard /> },
+                { path: "book_service", element: <BookService /> },
+                { path: "previous_requests", element: <PreviousRequests /> },
+                {
+                    path: "previous_requests/:id",
+                    element: <PreviousRequestDetails />,
+                },
+            ],
+        },
+        //mechanic routes
+        {
+            path: "/mechanic_dashboard",
+            element: <MechanicLayaout />,
+            children: [
+                // { path: "/mechanic_dashboard", element: <Navigate to="/" /> },
+                { path: "/mechanic_dashboard", element: <MechanicDashboard /> },
+                { path: "new_requests", element: <NewRequests /> },
+                { path: "new_requests/:id", element: <NewRequestDetails /> },
+                {
+                    path: "update_services",
+                    element: <UpdateServices />,
+                },
+                {
+                    path: "mechanic_services",
+                    element: <MechanicServices />,
+                },
+                {
+                    path: "mechanic_services/:id",
+                    element: <MechanicServiceDetails />,
+                },
+            ],
         },
     ]);
     return <RouterProvider router={router} />;

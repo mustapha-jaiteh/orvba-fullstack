@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import HomePageService from "./pages/HomePageService";
 // import { Element } from "react-scroll";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import MechanicRegister from "./components/mechanic/MechanicRegister";
 
 function Home() {
@@ -39,7 +40,7 @@ function Home() {
                 <Navbar />
 
                 <header className="App-header bg-[url('./images/car-3.jpg')] lg:bg-[url('./images/car-1.jpg')] bg-cover bg-center w-full h-[500px]   ">
-                    <div className=" bg-gray-200 bg-opacity-40 text-slate-950 lg:absolute mx-2 lg:mx-12 my-2 lg:my-4 justify-center items-center text-center lg:text-left lg:justify-start lg:items-start w-auto lg:w-[40%] px-8 py-4 ">
+                    <div className=" bg-gray-200 bg-opacity-60 text-slate-950 lg:absolute mx-2 lg:mx-12 my-2 lg:my-4 justify-center items-center text-center lg:text-left lg:justify-start lg:items-start w-auto lg:w-[40%] px-8 py-4 ">
                         <h5 className=" text-sm text-slate-950 tracking-widest mb-4 font-semibold">
                             QUALITY SERVICE
                         </h5>
@@ -52,6 +53,14 @@ function Home() {
                             needs. It aims to reduce time and cost for our users
                             to find mechanics during breakdowns.
                         </p>
+                        <NavLink to={"/admin_dashboard"}>
+                            <button
+                                className=" bg-blue-600 rounded-md border-gray-300  py-2 px-2 w-60  lg:w-60 font-bold text-gray-100 hover:bg-blue-400"
+                                // onClick={handleLoginPopup}
+                            >
+                                Admin dashboard
+                            </button>
+                        </NavLink>
                     </div>
                 </header>
                 <main className="  flex flex-col py-8  my-2  lg:my-4 bg-cover bg-center border-t-8 border-slate-950 w-full ">

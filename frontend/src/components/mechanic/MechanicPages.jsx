@@ -11,7 +11,7 @@ const MechanicPages = ({ title, buttons = "", children }) => {
                     {buttons}
                 </div>
             </header>
-            <main>
+            <main className=" max-w-7xl   px-4 lg:px-8 mx-auto">
                 <div>
                     {/* Your content */}
                     {children}

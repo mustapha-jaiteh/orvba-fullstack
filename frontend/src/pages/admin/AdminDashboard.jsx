@@ -17,7 +17,7 @@ const AdminDashboard = () => {
             <AdminPages title="Admin dashboard">
                 <div className="bg-gray-200 grid grid-cols-1 lg:grid-cols-3 py-8">
                     {/* mechanics */}
-                    <NavLink to="/mechanics">
+                    <NavLink to="mechanics">
                         <div className="card bg-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent items-center justify-center text-center  rounded-2xl shadow-slate-950 p-2 relative">
                             <GiMechanicGarage className="text-blue-800 text-3x hover:text-blue-600 h-32 w-32" />
                             <h2 className=" text-2xl font-bold text-center justify-center w-full text-blue-800">
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
                         </div>
                     </NavLink>
                     {/* users */}
-                    <NavLink to="/users">
+                    <NavLink to="users">
                         <div className="card bg-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent items-center justify-center text-center  rounded-2xl shadow-slate-950 p-2 relative">
                             <FaUsers className="text-green-800 text-3x hover:text-green-600 h-32 w-32" />
                             <h2 className=" text-2xl font-bold text-center justify-center w-full text-green-800">
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
                         </div>
                     </NavLink>
                     {/* bookings */}
-                    <NavLink to="/bookings">
+                    <NavLink to="bookings">
                         <div className="card bg-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent items-center justify-center text-center  rounded-2xl shadow-slate-950 p-2 relative">
                             <TbBrandBooking className="text-yellow-800 text-3x hover:text-yellow-600 h-32 w-32" />
                             <h2 className=" text-2xl font-bold text-center justify-center w-full text-yellow-800">
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
                         </div>
                     </NavLink>
                     {/* services */}
-                    <NavLink to="/services">
+                    <NavLink to="services">
                         <div className="card bg-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent items-center justify-center text-center  rounded-2xl shadow-slate-950 p-2 relative">
                             <MdHomeRepairService className="text-fuchsia-800 text-3x hover:text-fuchsia-600 h-32 w-32" />
                             <h2 className=" text-2xl font-bold text-center justify-center w-full text-fuchsia-800">
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
                         </div>
                     </NavLink>
                     {/* payments */}
-                    <NavLink to="/payments">
+                    <NavLink to="payments">
                         <div className="card bg-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent items-center justify-center text-center  rounded-2xl shadow-slate-950 p-2 relative">
                             <RiMoneyDollarCircleFill className="text-gray-600 text-3x hover:text-gray-400 h-32 w-32" />
                             <h2 className=" text-2xl font-bold text-center justify-center w-full text-gray-600">

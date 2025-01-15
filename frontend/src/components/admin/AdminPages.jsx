@@ -46,7 +46,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                 <ul className="flex flex-col lg:flex-row font-bold gap-1 lg:gap-20 items-center text-center ">
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/"
+                                            to="/admin_dashboard"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }
@@ -56,7 +56,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                     </li>
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/mechanics"
+                                            to="/admin_dashboard/mechanics"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }
@@ -66,7 +66,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                     </li>
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/users"
+                                            to="/admin_dashboard/users"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }
@@ -76,7 +76,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                     </li>
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/bookings"
+                                            to="/admin_dashboard/bookings"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }
@@ -86,7 +86,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                     </li>
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/services"
+                                            to="/admin_dashboard/services"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }
@@ -96,7 +96,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                                     </li>
                                     <li className="nav-item hover:text-blue-700 hover:cursor-pointer">
                                         <NavLink
-                                            to="/payments"
+                                            to="/admin_dashboard/payments"
                                             style={({ isActive }) =>
                                                 isActive ? getStyle : null
                                             }

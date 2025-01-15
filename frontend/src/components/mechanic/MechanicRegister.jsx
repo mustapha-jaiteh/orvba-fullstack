@@ -52,6 +52,7 @@ const MechanicRegister = () => {
             img: null,
             name: "",
             email: "",
+            role: "",
             phone: "",
             streetAddress: "",
             city: "",
@@ -71,6 +72,7 @@ const MechanicRegister = () => {
         if (!formData.img) errors.img = "profile picture is required";
         if (!formData.name) errors.name = "Full Name is required";
         if (!formData.email) errors.email = "Email is required";
+        if (!formData.role) errors.role = "Role is required";
         if (!formData.phone) errors.phone = "Phone number is required";
         if (!formData.streetAddress)
             errors.streetAddress = "Street Address is required";
@@ -106,6 +108,7 @@ const MechanicRegister = () => {
                 img: reader.result,
                 name: formData.name,
                 email: formData.email,
+                role: formData.role,
                 phone: formData.phone,
                 streetAddress: formData.streetAddress,
                 city: formData.city,
@@ -168,6 +171,18 @@ const MechanicRegister = () => {
                             onChange={handleChange}
                         />
                         {errors.email && <span>{errors.email}</span>}
+                    </div>
+                    <div className="role flex flex-col gap-2 text-start">
+                        <label className="label">Role:</label>
+                        <input
+                            className="border border-slate-500 rounded-lg p-2 text-black"
+                            type="text"
+                            name="role"
+                            placeholder="set role as mechanic"
+                            value={formData.role}
+                            onChange={handleChange}
+                        />
+                        {errors.role && <span>{errors.role}</span>}
                     </div>
                     <div className="phone flex flex-col gap-2 text-start">
                         <label>Phone:</label>

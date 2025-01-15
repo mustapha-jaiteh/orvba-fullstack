@@ -63,7 +63,9 @@ const Bookings = ({ bookings }) => {
                                         {book.date}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        <Link to={`/bookings/${book.id}`}>
+                                        <Link
+                                            to={`/admin_dashboard/bookings/${book.id}`}
+                                        >
                                             <button className="bg-red-500 p-2 rounded-sm w-20">
                                                 Details
                                             </button>

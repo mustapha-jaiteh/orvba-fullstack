@@ -241,6 +241,7 @@ export const tempServices = [
     {
         id: 1,
         licensePlate: "BJL 123456",
+        vehicleName: "Range Rover",
         vehicleOwner: "Mustapha Jaiteh",
         date: "07/18/2024",
         mechanicName: "Lamin Ceesay",
@@ -258,13 +259,14 @@ export const tempServices = [
     {
         id: 2,
         licensePlate: "BJL 56789",
+        vehicleName: "Benz",
         vehicleOwner: "John Doe",
         date: "07/18/2024",
         mechanicName: "Binta Badjie",
         mechanicPhone: "5609991",
         mechanicLicense: "343546",
         location: "Sanchaba",
-        status: "pending",
+        status: "in progress",
         issueDescription:
             "AdminDashboard Lorem ipsum dolor sit amet consectetur adipisicing elit. Adquisquam minus sapiente sunt, earum ut veritatis. Tenetur aspernatur quamducimus laudantium nobis nostrum nam cupiditate repellat odit, sunt eumipsam.",
         charges: "40000",
@@ -275,6 +277,7 @@ export const tempServices = [
     {
         id: 3,
         licensePlate: "BJL 456789",
+        vehicleName: "Toyota Rav4",
         vehicleOwner: "Kawsu Kebbeh",
         date: "07/18/2024",
         mechanicName: "Alfo Kebbeh",
@@ -292,6 +295,7 @@ export const tempServices = [
     {
         id: 4,
         licensePlate: "BJL 256789",
+        vehicleName: "BMW X5",
         vehicleOwner: "Binta Badjie",
         date: "07/18/2024",
         mechanicName: "Alfo Kebbeh",
@@ -309,9 +313,10 @@ export const tempServices = [
     {
         id: 5,
         licensePlate: "BJL 356789",
+        vehicleName: "Nissan Pathfinder",
         vehicleOwner: "Binta Badjie",
         date: "09/18/2024",
-        mechanicName: "Alfo Kebbeh",
+        mechanicName: "Lamin Ceesay",
         mechanicPhone: "5609991",
         mechanicLicense: "3535454",
         location: "Brikama",
@@ -358,17 +363,17 @@ const AdminContext = createContext();
 //     setPayments: () => {},
 // }
 
-//export mechanic details sample
-export const getMechanicById = (id) =>
-    tempMechanics.find((mechanic) => mechanic.id === id);
-//export user details sample
-export const getUserById = (id) => tempUsers.find((user) => user.id === id);
-//export booking details sample
-export const getBookingById = (id) =>
-    tempBookings.find((booking) => booking.id === id);
-//export service details sample
-export const getServiceById = (id) =>
-    tempServices.find((service) => service.id === id);
+// //export mechanic details sample
+// export const getMechanicById = (id) =>
+//     tempMechanics.find((mechanic) => mechanic.id === id);
+// //export user details sample
+// export const getUserById = (id) => tempUsers.find((user) => user.id === id);
+// //export booking details sample
+// export const getBookingById = (id) =>
+//     tempBookings.find((booking) => booking.id === id);
+// //export service details sample
+// export const getServiceById = (id) =>
+//     tempServices.find((service) => service.id === id);
 
 // Custom hook to use AdminContext
 export const useAdminContext = () => {
@@ -377,10 +382,8 @@ export const useAdminContext = () => {
 
 export const AdminProvider = ({ children }) => {
     const [admin, setAdmin] = useState({
-        name: "Tom Cook",
-        email: "tom@example.com",
-        imageUrl:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        name: "mustik",
+        password: "123456",
     });
     const [adminToken, setAdminToken] = useState("");
     const [users, setUsers] = useState(tempUsers);

@@ -1,9 +1,9 @@
 import React from "react";
-import AdminPages from "../../components/admin/AdminPages";
 import { useAdminContext } from "../../contexts/AdminContext";
+import MechanicPages from "../../components/mechanic/MechanicPages";
 import { useParams } from "react-router-dom";
 
-const ServiceDetails = () => {
+const MechanicServiceDetails = () => {
     const { services } = useAdminContext();
 
     const { id } = useParams();
@@ -36,9 +36,8 @@ const ServiceDetails = () => {
                 return "text-gray-500 hover:text-gray-600 ";
         }
     };
-
     return (
-        <AdminPages title="Service Details">
+        <MechanicPages title="Service Details">
             <div className="Phone  py-8 bg-blue-100">
                 <h1 className="text-center text-4xl my-2 py-4 font-bold">
                     service details of a
@@ -151,9 +150,8 @@ const ServiceDetails = () => {
                     </div>
                 </div>
             </div>
-        </AdminPages>
+        </MechanicPages>
     );
 };
 
-export default ServiceDetails;
-//
+export default MechanicServiceDetails;

@@ -1,29 +1,37 @@
 import React from "react";
-import AdminPages from "../../components/admin/AdminPages";
 import { useAdminContext } from "../../contexts/AdminContext";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import MechanicPages from "../../components/mechanic/MechanicPages";
+import { useNavigate } from "react-router-dom";
 
-const BookingDetails = () => {
-    const { bookings } = useAdminContext();
+const NewRequestDetails = () => {
+    const { bookings, services, mechanics } = useAdminContext();
 
     const { id } = useParams();
     const booking = bookings.find((book) => book.id === parseInt(id));
 
+    const navigate = useNavigate();
+    const updateService = (licensePlate) => {
+        navigate(`/mechanic_dashboard/update_services`, {
+            state: { licensePlate },
+        });
+    };
+
     return (
-        <AdminPages title="Booking Details">
+        <MechanicPages title="New Request Details">
             <div className="Phone  py-8 bg-blue-100">
-                <h1 className="text-center text-4xl my-2 py-4 font-bold">
-                    Booking details of a
+                <h1 className="text-center text-4xl my-2 py-4 font-bold mx-2">
+                    New Request Details of a
                 </h1>
                 <div className="profile-details items-center justify-center text-center">
                     <div className="image">
-                        <h2 className=" text-4xl font-bold text-center justify-center w-full text-blue-800">
+                        <h2 className=" text-4xl font-bold text-center justify-center w-full text-blue-800 ">
                             {booking.vehicleName}
                         </h2>
-                        <h3 className="text-center text-md font-bold m-2">
+                        {/* <h3 className="text-center text-md font-bold m-2">
                             The details on the card below will be sent to the
                             assigned mechanic.
-                        </h3>
+                        </h3> */}
                         <div className="card bg-white m-4 lg:mx-32  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-4 relative">
                             <div>
                                 <h2 className=" font-bold text-start my-2 mx-1 text-blue-800">
@@ -69,15 +77,24 @@ const BookingDetails = () => {
                             </div>
                         </div>
                         <div className=" items-center justify-center">
-                            <button className=" bg-blue-600 hover:bg-blue-400 rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ">
-                                Assign a mechanic
+                            {/* <NavLink
+                                to={}
+                            > */}
+                            <button
+                                className=" bg-blue-600 hover:bg-blue-400 rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 "
+                                onClick={() =>
+                                    updateService(booking.licensePlate)
+                                }
+                            >
+                                Add to services
                             </button>
+                            {/* </NavLink> */}
                         </div>
                     </div>
                 </div>
             </div>
-        </AdminPages>
+        </MechanicPages>
     );
 };
 
-export default BookingDetails;
+export default NewRequestDetails;

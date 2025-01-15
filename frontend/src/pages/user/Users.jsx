@@ -13,7 +13,8 @@ const Users = ({ users }) => {
                     <h1 className="text-center text-4xl my-2 py-4 font-bold">
                         Users
                     </h1>
-                    <Link to="/user_register">
+                    {/* TO DO-- change link to user register */}
+                    <Link to="/user_dashboard">
                         <button className="bg-blue-500 text-white rounded-lg px-4 py-2 font-bold m-3 w-52 gap-2 flex items-center justify-center text-center">
                             Add a user
                             <UserPlusIcon className="h-8 w-8" />
@@ -66,7 +67,9 @@ const Users = ({ users }) => {
                                         {user.licensePlate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        <Link to={`/users/${user.id}`}>
+                                        <Link
+                                            to={`/admin_dashboard/users/${user.id}`}
+                                        >
                                             <button className="bg-red-500 p-2 rounded-sm w-20 ">
                                                 Details
                                             </button>
