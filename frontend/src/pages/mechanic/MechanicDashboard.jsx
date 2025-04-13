@@ -1,27 +1,29 @@
 import React from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useAdminContext } from "../../contexts/AdminContext";
+import { useMechanicContext } from "../../contexts/MechanicContext";
 import MechanicPages from "../../components/mechanic/MechanicPages";
 
 const MechanicDashboard = () => {
     const { mechanics, services } = useAdminContext();
+    const { mechanic } = useMechanicContext();
 
     // const { id } = useParams();
-    const mechanic = mechanics.find((item) => item.id === 1);
+    // const mechanic = mechanics.find((item) => item.id === 1);
 
     //number of services in the last 6 months
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     const jobOrder = services.filter(
         (service) =>
-            service.mechanicLicense === mechanic.certificationNumber &&
+            service.mechanic_license === mechanic.certification_number &&
             new Date(service.date) >= sixMonthsAgo
     ).length;
 
     //total services completed
     const completedServices = services.filter(
         (service) =>
-            service.mechanicLicense === mechanic.certificationNumber &&
+            service.mechanic_license === mechanic.certification_number &&
             service.status === "completed"
     ).length;
 
@@ -38,9 +40,9 @@ const MechanicDashboard = () => {
                                 The details on the card below will be shown to
                                 your clients
                             </h3>
-                            <div className="card bg-gray-50 flex flex-row m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2 relative">
+                            <div className="card bg-gray-50 flex flex-col lg:flex-row justify-center items-center lg:justify-start  m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2 relative">
                                 <img
-                                    src={mechanic.img}
+                                    src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
                                     alt=""
                                     className="img h-32 w-32 p-s3 rounded-full "
                                 />

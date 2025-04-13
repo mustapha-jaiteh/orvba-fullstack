@@ -1,20 +1,30 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserPages from "../../components/user/UserPages";
 import { useAdminContext } from "../../contexts/AdminContext";
 import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
+import axiosClient from "../../axios";
+import axios from "axios";
 
 const BookService = () => {
+    // const [startDate, setStartDate] = useState(new Date());
     const [formData, setFormData] = useState({
-        vehicleName: "",
-        licensePlate: "",
-        vehicleOwner: "",
+        vehicle_name: "",
+        license_plate: "",
+        vehicle_owner: "",
         email: "",
         phone: "",
-        location: "",
-        issueDescription: "",
-        date: "",
+        city: "",
+        issue_description: "",
+        date: null,
     });
+
+    const [submitted, setSubmitted] = useState(false);
+    const [responseMessage, setResponseMessage] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         setFormData({
@@ -23,16 +33,71 @@ const BookService = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    // useEffect to submit data when formData changes
+    useEffect(() => {
+        if (
+            formData.vehicle_name &&
+            formData.license_plate &&
+            formData.vehicle_owner &&
+            formData.email &&
+            formData.phone &&
+            formData.city &&
+            formData.issue_description &&
+            formData.date
+        ) {
+            handleSubmit();
+        }
+    }, [formData]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Here you can send the form data to the server or handle it as needed
-        console.log("Booking Details:", formData);
-        alert("Service booked successfully!");
+
+        const payload = {
+            ...formData,
+            date: formData.date ? format(formData.date, "yyyy-MM-dd") : null,
+        };
+
+        try {
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/booking",
+                payload,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            setResponseMessage(response.data.message);
+            setSubmitted(true);
+            setFormData({
+                vehicle_name: "",
+                license_plate: "",
+                vehicle_owner: "",
+                email: "",
+                phone: "",
+                city: "",
+                issue_description: "",
+                date: null,
+            });
+            setTimeout(() => setSubmitted(false), 3000); // Hide success message after 3s
+            console.log("Booking Success:", response.data);
+        } catch (error) {
+            console.error(
+                "Booking Error:",
+                error.response?.data || error.message
+            );
+        }
     };
 
     return (
         <UserPages title="Book a service">
-            <div className=" text-black  p-8">
+            <div className=" ">
+                {submitted && (
+                    <p className="text-green-600 bg-green-100 p-2 mb-4 text-center rounded fixed bottom-0 left-0 right-0">
+                        ✅ Booking is Successful!
+                    </p>
+                )}
                 {/* <h2>Book a Service</h2> */}
                 <form
                     onSubmit={handleSubmit}
@@ -47,9 +112,9 @@ const BookService = () => {
                             <input
                                 className="border border-slate-500 rounded-lg p-2 text-black"
                                 type="text"
-                                name="name"
-                                placeholder="Full Name"
-                                value={formData.vehicleName}
+                                name="vehicle_name"
+                                placeholder="Vehicle Name"
+                                value={formData.vehicle_name}
                                 onChange={handleChange}
                                 required
                             />
@@ -59,9 +124,9 @@ const BookService = () => {
                             <input
                                 className="border border-slate-500 rounded-lg p-2 text-black"
                                 type="text"
-                                name="name"
-                                placeholder="Full Name"
-                                value={formData.licensePlate}
+                                name="license_plate"
+                                placeholder=" License Plate"
+                                value={formData.license_plate}
                                 onChange={handleChange}
                                 required
                             />
@@ -71,9 +136,9 @@ const BookService = () => {
                             <input
                                 className="border border-slate-500 rounded-lg p-2 text-black"
                                 type="text"
-                                name="name"
-                                placeholder="Full Name"
-                                value={formData.vehicleOwner}
+                                name="vehicle_owner"
+                                placeholder=" Vehicle Owner"
+                                value={formData.vehicle_owner}
                                 onChange={handleChange}
                                 required
                             />
@@ -107,9 +172,9 @@ const BookService = () => {
                             <input
                                 className="border border-slate-500 rounded-lg p-2 text-black"
                                 type="text"
-                                name="location"
+                                name="city"
                                 placeholder="Location"
-                                value={formData.location}
+                                value={formData.city}
                                 onChange={handleChange}
                                 required
                             />
@@ -118,23 +183,32 @@ const BookService = () => {
                             <label>Issue Description:</label>
                             <textarea
                                 className="border border-slate-500 rounded-lg p-2 text-black"
-                                name="issueDescription"
+                                name="issue_description"
                                 placeholder="Describe the problem"
-                                value={formData.issueDescription}
+                                value={formData.issue_description}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="date flex flex-col gap-2">
                             <label>Date:</label>
-                            <input
+                            <DatePicker
+                                className="border border-slate-500 rounded-lg p-2 text-black"
+                                selected={formData.date}
+                                onChange={(date) =>
+                                    setFormData({ ...formData, date })
+                                }
+                                dateFormat="yyyy/MM/dd"
+                                required
+                            />
+                            {/* <input
                                 className="border border-slate-500 rounded-lg p-2 text-black"
                                 type="date"
                                 name="date"
                                 value={formData.date}
                                 onChange={handleChange}
                                 required
-                            />
+                            /> */}
                         </div>
 
                         <button

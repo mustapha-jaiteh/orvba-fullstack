@@ -13,11 +13,13 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Footer from "../Footer";
+import { useMechanicContext } from "../../contexts/MechanicContext";
+import { useNavigate } from "react-router-dom";
 
-const user = {
-    name: "mustik",
-    password: "123456",
-};
+// const user = {
+//     name: "mustik",
+//     password: "123456",
+// };
 
 const navigation = [
     { name: "Dashboard", to: "/mechanic_dashboard" },
@@ -25,22 +27,26 @@ const navigation = [
     { name: "Service status", to: "mechanic_services" },
 ];
 
-const handleLogout = (ev) => {
-    ev.preventDefault();
-    // localStorage.removeItem("token");
-    // window.location.href = "/";
-    console.log("logout");
-};
-const userNavigation = [
-    { name: "Edit Profile", href: "#" },
-    { name: "Sign out", onClick: handleLogout },
-];
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
 export default function MechanicLayout() {
+    const { mechanic, logout } = useMechanicContext();
+    console.log("mechanic profile data", mechanic);
+    const navigate = useNavigate();
+
+    const userNavigation = [
+        { name: "Edit Profile", href: "#" },
+        {
+            name: "Sign out",
+            onClick: () => {
+                logout(); // Call logout from context
+                navigate("/", { replace: true });
+            },
+        },
+    ];
+
     return (
         <>
             <div className="min-h-full">
@@ -112,7 +118,7 @@ export default function MechanicLayout() {
                                                 </span>
                                                 <img
                                                     alt=""
-                                                    src={user.imageUrl}
+                                                    src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
                                                     className="size-8 rounded-full"
                                                 />
                                             </MenuButton>
@@ -125,7 +131,7 @@ export default function MechanicLayout() {
                                                 <MenuItem key={item.name}>
                                                     <a
                                                         href="#"
-                                                        onClick={handleLogout}
+                                                        onClick={item.onClick}
                                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                                     >
                                                         {item.name}
@@ -183,16 +189,16 @@ export default function MechanicLayout() {
                                 <div className="shrink-0">
                                     <img
                                         alt=""
-                                        src={user.imageUrl}
+                                        src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
                                         className="size-10 rounded-full"
                                     />
                                 </div>
                                 <div className="ml-3">
                                     <div className="text-base/5 font-medium text-white">
-                                        {user.name}
+                                        {mechanic.name}
                                     </div>
                                     <div className="text-sm font-medium text-gray-400">
-                                        {user.email}
+                                        {mechanic.email}
                                     </div>
                                 </div>
                                 <button
@@ -213,8 +219,8 @@ export default function MechanicLayout() {
                                 {userNavigation.map((item) => (
                                     <DisclosureButton
                                         key={item.name}
-                                        as="a"
-                                        href={item.href}
+                                        href=""
+                                        onClick={item.onClick}
                                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                                     >
                                         {item.name}
@@ -225,6 +231,7 @@ export default function MechanicLayout() {
                     </DisclosurePanel>
                 </Disclosure>
                 {/* Your content */}
+                {/* {mechanic ? <Outlet /> : <Navigate to="/" />} */}
                 <Outlet />
                 <Footer />
             </div>

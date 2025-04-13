@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\Mechanic as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; // ✅ Import HasApiTokens
 
-class User extends Authenticatable
-{
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasApiTokens, Notifiable;
 
-    /**
+class Mechanic extends Model
+{
+     /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, HasApiTokens, Notifiable;
+     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-    protected $fillable = [
+       protected $fillable = [
+        'profile_image',
         'name',
         'email',
         'role',
@@ -26,11 +27,9 @@ class User extends Authenticatable
         'street_address',
         'city',
         'region' ,
-        'vehicle_name',
-        'vehicle_model',
-        'vehicle_year',
-        'license_plate',
-        'vehicle_type',
+        'mechanic_license',
+        'years_of_experience',
+        'specialization',
         'username',
          'password'     
 

@@ -10,8 +10,9 @@ import Navbar from "./components/Navbar";
 import HomePageService from "./pages/HomePageService";
 // import { Element } from "react-scroll";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import MechanicRegister from "./components/mechanic/MechanicRegister";
+import { useStateContext } from "./contexts/UserContext";
 
 function Home() {
     const [count, setCount] = useState(0);
@@ -33,6 +34,13 @@ function Home() {
     const handleUserRegisterClose = () => {
         setIsUserRegisterVisible(false);
     };
+
+    const { currentUser, setCurrentUser, userToken, setUserToken } =
+        useStateContext();
+
+    if (userToken) {
+        return <Navigate to="/user_dashboard" />;
+    }
 
     return (
         <>

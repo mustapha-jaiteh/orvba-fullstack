@@ -17,7 +17,7 @@ const MechanicDetails = () => {
     );
 
     //number of services in the last 6 months
-    const sixMonthsAgo = new Date();
+    const sixMonthsAgo = new Date();cz
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     const jobOrder = mechanicServices.filter(
         (service) => new Date(service.date) >= sixMonthsAgo

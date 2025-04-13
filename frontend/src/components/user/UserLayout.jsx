@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet } from "react-router-dom";
 import logo from "/images/car-2.png";
 
 import {
@@ -11,36 +11,57 @@ import {
     MenuItem,
     MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+    Bars3Icon,
+    BellIcon,
+    UserIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
 import Footer from "../Footer";
+import { useStateContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
-const user = {
-    name: "mustik",
-    password: "123456",
-};
+// const user = {
+//     name: "mustik",
+//     password: "123456",
+// };
 
 const navigation = [
     { name: "Dashboard", to: "/user_dashboard" },
     { name: "Book a service", to: "book_service" },
-    { name: "Previous requests", to: "previous_requests" },
+    { name: "Aproved service requests", to: "previous_requests" },
 ];
 
-const handleLogout = (ev) => {
-    ev.preventDefault();
-    // localStorage.removeItem("token");
-    // window.location.href = "/";
-    console.log("logout");
-};
-const userNavigation = [
-    { name: "Edit Profile", href: "#" },
-    { name: "Sign out", onClick: handleLogout },
-];
+// const handleLogout = (ev) => {
+//     ev.preventDefault();
+//     // localStorage.removeItem("token");
+//     // window.location.href = "/";
+//     console.log("logout");
+// };
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
 export default function UserLayout() {
+    const { user, logout } = useStateContext();
+    const navigate = useNavigate();
+
+    const userNavigation = [
+        { name: "Edit Profile", href: "#" },
+        {
+            name: "Sign out",
+            onClick: () => {
+                logout(); // Call logout from context
+                navigate("/", { replace: true });
+            },
+        },
+    ];
+
+    // if (!user) {
+    //     return <Navigate to="/" />;
+    // }
+
     return (
         <>
             <div className="min-h-full">
@@ -110,11 +131,12 @@ export default function UserLayout() {
                                                 <span className="sr-only">
                                                     Open user menu
                                                 </span>
-                                                <img
+                                                <UserIcon className="size-10 rounded-full text-white bg-slate-950" />
+                                                {/* <img
                                                     alt=""
                                                     src={user.imageUrl}
                                                     className="size-8 rounded-full"
-                                                />
+                                                /> */}
                                             </MenuButton>
                                         </div>
                                         <MenuItems
@@ -125,7 +147,7 @@ export default function UserLayout() {
                                                 <MenuItem key={item.name}>
                                                     <a
                                                         href="#"
-                                                        onClick={handleLogout}
+                                                        onClick={item.onClick}
                                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                                     >
                                                         {item.name}
@@ -181,11 +203,12 @@ export default function UserLayout() {
                         <div className="border-t border-gray-700 pb-3 pt-4">
                             <div className="flex items-center px-5">
                                 <div className="shrink-0">
-                                    <img
+                                    <UserIcon className="size-10 rounded-full text-white bg-slate-950" />
+                                    {/* <img
                                         alt=""
                                         src={user.imageUrl}
                                         className="size-10 rounded-full"
-                                    />
+                                    /> */}
                                 </div>
                                 <div className="ml-3">
                                     <div className="text-base/5 font-medium text-white">
@@ -194,6 +217,7 @@ export default function UserLayout() {
                                     <div className="text-sm font-medium text-gray-400">
                                         {user.email}
                                     </div>
+                                    {/* {userToken} */}
                                 </div>
                                 <button
                                     type="button"
@@ -205,7 +229,7 @@ export default function UserLayout() {
                                     </span>
                                     <BellIcon
                                         aria-hidden="true"
-                                        className="size-6"
+                                        className="size-6 "
                                     />
                                 </button>
                             </div>
@@ -213,8 +237,8 @@ export default function UserLayout() {
                                 {userNavigation.map((item) => (
                                     <DisclosureButton
                                         key={item.name}
-                                        as="a"
-                                        href={item.href}
+                                        href=""
+                                        onClick={item.onClick}
                                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                                     >
                                         {item.name}
@@ -225,7 +249,10 @@ export default function UserLayout() {
                     </DisclosurePanel>
                 </Disclosure>
                 {/* Your content */}
+                {/* {user ? <Outlet /> : <Navigate to="/" />} */}
+
                 <Outlet />
+
                 <Footer />
             </div>
         </>

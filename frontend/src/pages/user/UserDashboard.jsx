@@ -1,29 +1,34 @@
 import React from "react";
 import UserPages from "../../components/user/UserPages";
 import { useAdminContext } from "../../contexts/AdminContext";
+import { useStateContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import SearchBar from "../../components/user/SearchBar";
+import SearchResult from "../../components/user/SearchResult";
 
 const UserDashboard = () => {
     //fetch the user data
-    const { users, mechanics, services, bookings } = useAdminContext();
+    const { mechanics, services, bookings } = useAdminContext();
+    const { user, login, logout } = useStateContext();
     //fetch the user data
     // const { id } = useParams();
-    const user = users.find((item) => item.id === 1);
 
     //user services data
     const userServices = services.filter(
-        (service) => service.licensePlate === user.licensePlate && user.id === 1
+        (service) => service.license_plate === user.license_plate
     );
     //fetch the latest service for the user
     const currentService = userServices.find(
-        (service) => service.status === "in progress" && user.id === 1
+        (service) =>
+            service.status === "in progress" &&
+            service.license_plate === user.license_plate
     );
 
     //the number of bookings made by the user
     const userBookings = bookings.filter(
-        (booking) => booking.licensePlate === user.licensePlate && user.id === 1
+        (booking) => booking.license_plate === user.license_plate
     ).length;
     // Determine button class based on service status
     const getServiceStatus = () => {
@@ -41,7 +46,7 @@ const UserDashboard = () => {
 
     // payment status
     const getPaymentStatus = () => {
-        switch (currentService.paymentStatus) {
+        switch (currentService.payment_ptatus) {
             case "completed":
                 return "text-green-500 hover:text-green-600 ";
             case "in progress":
@@ -52,16 +57,23 @@ const UserDashboard = () => {
                 return "text-gray-500 hover:text-gray-600 ";
         }
     };
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filterBy, setFilterBy] = useState("name");
-    const [filteredMechanics, setFilteredMechanics] = useState(mechanics);
 
-    const handleSearch = () => {
-        const lowercasedTerm = searchTerm.toLowerCase();
-        const results = mechanics.filter((mechanic) =>
-            mechanic[filterBy].toLowerCase().includes(lowercasedTerm)
-        );
-        setFilteredMechanics(results);
+    const [query, setQuery] = useState("");
+    const [filterBy, setFilterBy] = useState("name");
+
+    // Filtered companies based on search query and filter
+    const filteredMechanics = mechanics.filter((mechnic) =>
+        mechnic[filterBy].toLowerCase().includes(query.toLowerCase())
+    );
+
+    // Handle search input change
+    const handleSearch = (value) => {
+        setQuery(value);
+    };
+
+    // Handle filter selection change
+    const handleFilter = (value) => {
+        setFilterBy(value);
     };
 
     // return the user data
@@ -73,71 +85,24 @@ const UserDashboard = () => {
                 </h2>
                 <h3 className="text-center text-md font-bold m-2">
                     You can manage your account here, book a service, check your
-                    revious request status, search for a nearby mechanic for an
-                    emergency service, etc.
+                    previous service request status, search for a nearby
+                    mechanic for an emergency service, etc.
                 </h3>
             </div>
-            <div className="p-4">
-                <h1 className="text-xl font-bold">
-                    Search for a nearby Mechanic
-                </h1>
-                <div className="flex flex-col lg:flex-row gap-4 items-center space-x-4 mt-4">
-                    {/* Dropdown to select search criteria */}
-                    <select
-                        value={filterBy}
-                        onChange={(e) => setFilterBy(e.target.value)}
-                        className="p-2 border border-gray-500 rounded"
-                    >
-                        <option value="name">Name</option>
-                        <option value="location">Location</option>
-                        <option value="profession">Profession</option>
-                    </select>
-
-                    {/* Search Input */}
-                    <div className="flex items-center border rounded-lg p-2 relative">
-                        <CiSearch className="absolute right-4  top-1/2 -translate-y-1/2" />
-                        <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder={`Search by ${filterBy}`}
-                            className="p-2 border border-gray-500 w-80 rounded flex-grow"
-                        />
-                    </div>
-
-                    {/* Search Button */}
-                    <button
-                        onClick={handleSearch}
-                        className="p-2 bg-blue-500 w-32 text-white rounded"
-                    >
-                        Search
-                    </button>
-                </div>
-
-                {/* Display Results
-                    <div className="mt-6">
-                        {filteredMechanics.length > 0 ? (
-                            filteredMechanics.map((mechanic) => (
-                                <div key={mechanic.id} className="p-2 border-b">
-                                    <p>
-                                        <strong>Name:</strong> {mechanic.name}
-                                    </p>
-                                    <p>
-                                        <strong>Location:</strong>{" "}
-                                        {mechanic.location}
-                                    </p>
-                                    <p>
-                                        <strong>Profession:</strong>{" "}
-                                        {mechanic.profession}
-                                    </p>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-gray-500">No mechanics found.</p>
-                        )}
-                    </div> */}
+            <div className="py-2 gap-2 z-10 bg-gray-100 my-4 mx-8 rounded-t-xl items-center justify-center text-center ">
+                <SearchBar
+                    query={query}
+                    filterBy={filterBy}
+                    onSearch={handleSearch}
+                    onFilter={handleFilter}
+                />
             </div>
-
+            <SearchResult
+                query={query}
+                filterBy={filterBy}
+                filteredMechanics={filteredMechanics}
+            />
+            {/* user details */}
             <div className="Phone grid grid-cols-1 lg:grid-cols-3 py-8 bg-blue-100">
                 {/* <div className="profile-details"> */}
                 <div className="image">
@@ -148,23 +113,23 @@ const UserDashboard = () => {
                     <div className="card bg-gray-50 flex flex-row m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2 relative px-8">
                         <div>
                             <h2 className=" font-bold text-start my-2 mx-1 text-blue-800">
-                                <span className="text-black">Name:</span>{" "}
+                                <span className="text-black">User name:</span>{" "}
                                 {user.name}
                             </h2>
-                            <p className="text-start my-2 mx-1">
+                            {/* <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Email:</span>{" "}
                                 {user.email}
-                            </p>
+                            </p> */}
 
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Vehicle name:</span>{" "}
-                                {user.vehicleName}
+                                {user.vehicle_name}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     License plate:
                                 </span>{" "}
-                                {user.licensePlate}
+                                {user.license_plate}
                             </p>
                         </div>
                     </div>
@@ -188,7 +153,7 @@ const UserDashboard = () => {
                                 <span className="font-bold">
                                     License plate:{" "}
                                 </span>{" "}
-                                {currentService.licensePlate}
+                                {currentService.license_plate}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 {" "}
@@ -201,7 +166,7 @@ const UserDashboard = () => {
                                 <span className="font-bold">
                                     Mechanic name:
                                 </span>{" "}
-                                {currentService.mechanicName}
+                                {currentService.mechanic_name}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
@@ -213,7 +178,7 @@ const UserDashboard = () => {
                                 <span className="font-bold">
                                     Mechanic contact:
                                 </span>{" "}
-                                {currentService.mechanicPhone}
+                                {currentService.mechanic_phone}
                             </p>
 
                             <p className="text-start my-2 mx-1">
@@ -222,18 +187,18 @@ const UserDashboard = () => {
                             </p>
                             <p
                                 className={`text-start my-2 mx-1 font-bold ${getPaymentStatus(
-                                    currentService.paymentStatus
+                                    currentService.payment_status
                                 )}`}
                             >
                                 <span className="font-bold text-white">
                                     Payment status:
                                 </span>{" "}
-                                {currentService.paymentStatus}
+                                {currentService.payment_status}
                             </p>
 
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Paid date:</span>{" "}
-                                {currentService.paidDate}
+                                {currentService.paid_date}
                             </p>
                             <div className=" text-center justify-center  my-8">
                                 <h2 className=" text-4xl font-bold text-center justify-center w-full ">

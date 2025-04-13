@@ -37,6 +37,7 @@ import NewRequestDetails from "./src/components/mechanic/NewRequestDetails.jsx";
 import UpdateServices from "./src/components/mechanic/UpdateServices.jsx";
 import MechanicServices from "./src/components/mechanic/MechanicServices.jsx";
 import MechanicServiceDetails from "./src/components/mechanic/MechanicServiceDetails.jsx";
+// import ProtectedRoute from "./ProtectedRoute";
 
 const Router = () => {
     const { mechanics, users, bookings, services } = useAdminContext();
