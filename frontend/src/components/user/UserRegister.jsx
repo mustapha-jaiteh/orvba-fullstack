@@ -55,7 +55,8 @@ const UserRegister = () => {
             formData.license_plate &&
             formData.vehicle_type &&
             formData.username &&
-            formData.password
+            formData.password &&
+            formData.confirm_password
         ) {
             handleSubmit();
         }

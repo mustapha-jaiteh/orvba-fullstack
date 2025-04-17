@@ -30,7 +30,7 @@ const HomePageServices = () => {
                 <header className="bg-slate-950  bg-cover bg-center w-full h-[100px] justify-center items-center text-center p-4">
                     <h2 className="text-gray-100 text-6xl">SERVICES</h2>
                 </header>
-                <p className="mx-8 lg:mx-8 text-slate-950 text-2xl font-bold p-8 text-center">
+                <p className="mx-8 lg:mx-60 text-slate-950 text-4xl font-bold p-8 text-center">
                     From regular maintenance to emergency repairs, our team of
                     experienced mechanics is here to help you get the job done.
                 </p>
