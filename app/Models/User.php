@@ -32,7 +32,8 @@ class User extends Authenticatable
         'license_plate',
         'vehicle_type',
         'username',
-         'password'     
+         'password',
+         'confirm_password'     
 
     ];
 

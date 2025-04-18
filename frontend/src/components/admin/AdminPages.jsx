@@ -10,7 +10,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
     return (
         <>
             <header className="bg-white shadow">
-                <div className=" flex justify-between items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div className=" flex justify-between items-center mx-auto  px-4 py-6 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                         {title}
                     </h1>
@@ -18,7 +18,7 @@ const AdminPages = ({ title, buttons = "", children }) => {
                 </div>
             </header>
             <main>
-                <div className=" max-w-7xl   px-4 lg:px-8 mx-auto bg-gray-300">
+                <div className="    px-4 lg:px-8 mx-auto bg-gray-300">
                     <div className="admin-page  bg-gray-300 ">
                         <div className="admin-page-content py-2 mx-8">
                             <div className="flex flex-col lg:flex-row gap-2 justify-between items-center mb-6">

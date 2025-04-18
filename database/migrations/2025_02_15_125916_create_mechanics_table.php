@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('region');
             $table->string('mechanic_license');
             $table->string('years_of_experience');
-            $table->integer('specification');
+            $table->integer('specialization');
              $table->string('username');
             $table->string('password');
             

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('vehicle_type');
             $table->string('username');
             $table->string('password');
-             $table->string('password_confirmation');
+             $table->string('password_confirmation')->default(''); // Empty default;
             $table->rememberToken();
             $table->timestamps();
         });

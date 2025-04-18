@@ -33,7 +33,7 @@ const Navbar = () => {
         <div>
             {" "}
             <nav className="nav bg-slate-950 h-[300px] lg:h-20  grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center ">
-                <div className="logo-container mx-4 lg:mx-8 flex p-2 ">
+                <div className="logo-container mx-4  flex p-2 ">
                     <img
                         src={logo}
                         alt="logo"
