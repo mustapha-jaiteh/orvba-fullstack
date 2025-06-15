@@ -17,4 +17,24 @@ class BookingController extends Controller
         'data' => $booking
     ]);
 }
+
+//assign mechanic to booking 
+
+public function assignMechanic(Request $request, $id)
+{
+    $request->validate([
+        'mechanic_license' => 'required|string',
+        'mechanic_name' => 'required|string',
+    ]);
+
+    $booking = Booking::findOrFail($id);
+    $booking->update([
+        'mechanic_license' => $request->mechanic_license,
+        'mechanic_name' => $request->mechanic_name,
+        'assigned' => true,
+    ]);
+
+    return response()->json(['message' => 'Booking assigned to mechanic successfully']);
+}
+
 }

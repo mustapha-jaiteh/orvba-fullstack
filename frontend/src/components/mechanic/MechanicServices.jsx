@@ -2,15 +2,10 @@ import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import MechanicPages from "../../components/mechanic/MechanicPages";
 import { useAdminContext } from "../../contexts/AdminContext";
+import { useMechanicContext } from "../../contexts/MechanicContext";
 
 const MechanicServices = () => {
-    const { mechanics, services } = useAdminContext();
-    const mechanic = mechanics.find((item) => item.id === 1);
-
-    const mechanicServices = services.filter(
-        (service) => service.mechanicLicense === mechanic.certificationNumber
-    );
-
+    const { services } = useMechanicContext();
     return (
         <MechanicPages title="Services">
             <div className="services  h-full bg-green-100 pb-8 ">
@@ -52,40 +47,46 @@ const MechanicServices = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {mechanicServices.map((service) => (
-                                <tr
-                                    key={service.id}
-                                    className="border-b-2 border-gray-300 bg-gray-100 pl-2 text-center"
-                                >
-                                    <td className="p-2 border-x border-gray-300">
-                                        {service.licensePlate}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300">
-                                        {service.vehicleName}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300">
-                                        {service.vehicleOwner}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300">
-                                        {service.date}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300">
-                                        {service.mechanicName}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300 font-bold">
-                                        {service.status}
-                                    </td>
-                                    <td className="p-2 border-x border-gray-300">
-                                        <Link
-                                            to={`/mechanic_dashboard/mechanic_services/${service.id}`}
-                                        >
-                                            <button className="bg-red-500 p-2 rounded-sm">
-                                                Details
-                                            </button>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
+                            {services.length === 0 ? (
+                                <p className="text-2xl text-center font-bold m-6">
+                                    No vehicle service for now.
+                                </p>
+                            ) : (
+                                services.map((service) => (
+                                    <tr
+                                        key={service.id}
+                                        className="border-b-2 border-gray-300 bg-gray-100 pl-2 text-center"
+                                    >
+                                        <td className="p-2 border-x border-gray-300">
+                                            {service.license_plate}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300">
+                                            {service.vehicle_name}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300">
+                                            {service.vehicle_owner}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300">
+                                            {service.request_date}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300">
+                                            {service.mechanic_name}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300 font-bold">
+                                            {service.status}
+                                        </td>
+                                        <td className="p-2 border-x border-gray-300">
+                                            <Link
+                                                to={`/mechanic_dashboard/mechanic_services/${service.id}`}
+                                            >
+                                                <button className="bg-red-500 p-2 rounded-sm">
+                                                    Details
+                                                </button>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

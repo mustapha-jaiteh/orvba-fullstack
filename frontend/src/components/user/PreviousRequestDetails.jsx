@@ -2,16 +2,26 @@ import React from "react";
 import UserPages from "../../components/user/UserPages";
 import { useAdminContext } from "../../contexts/AdminContext";
 import { useParams } from "react-router-dom";
+import { useStateContext } from "../../contexts/UserContext";
+import { useState } from "react";
+import axios from "axios";
 
 const PreviousRequestDetails = () => {
+    const { user } = useStateContext();
+    //admin services data
     const { services } = useAdminContext();
 
     const { id } = useParams();
-    const service = services.find((service) => service.id === parseInt(id));
+    const userServices = services.find(
+        (service) => service.id === parseInt(id)
+    );
+
+    //user services data
+    // const userServices = user.license_plate === myService.license_plate;
 
     // Determine button class based on service status
     const getServiceStatus = () => {
-        switch (service.status) {
+        switch (userServices.status) {
             case "completed":
                 return "bg-green-500 hover:bg-green-600 text-white";
             case "in progress":
@@ -25,7 +35,7 @@ const PreviousRequestDetails = () => {
 
     // payment status
     const getPaymentStatus = () => {
-        switch (service.paymentStatus) {
+        switch (userServices.payment_status) {
             case "completed":
                 return "text-green-500 hover:text-green-600 ";
             case "in progress":
@@ -36,6 +46,29 @@ const PreviousRequestDetails = () => {
                 return "text-gray-500 hover:text-gray-600 ";
         }
     };
+
+    const [message, setMessage] = useState("");
+    const [success, setSuccess] = useState(false);
+
+    const sendFeedback = async () => {
+        try {
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/feedback",
+                {
+                    service_id: userServices.id,
+                    license_plate: userServices.license_plate,
+                    message: message,
+                }
+            );
+            setMessage("");
+            setSuccess(true);
+            console.log("feedback sent successfully!", response.data);
+            setTimeout(() => setSuccess(false), 3000); // Hide success message after 3s
+        } catch (error) {
+            console.error("Error sending feedback:", error);
+        }
+    };
+
     return (
         <UserPages title="Service Details">
             <div className="Phone  py-8 bg-blue-100">
@@ -45,7 +78,7 @@ const PreviousRequestDetails = () => {
                 <div className="profile-details items-center justify-center text-center">
                     <div className="image">
                         <h2 className=" text-4xl font-bold text-center justify-center w-full text-blue-800">
-                            {service.licensePlate}
+                            {userServices.license_plate}
                         </h2>
                         <h3 className="text-center text-md font-bold m-2">
                             The details on the card below are the service
@@ -58,78 +91,67 @@ const PreviousRequestDetails = () => {
                                         <span className="text-black">
                                             License plate:
                                         </span>{" "}
-                                        {service.licensePlate}
+                                        {userServices.license_plate}
                                     </h2>
 
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Vehicle owner:
                                         </span>{" "}
-                                        {service.vehicleOwner}
+                                        {userServices.vehicle_owner}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Mechanic name:
                                         </span>{" "}
-                                        {service.mechanicName}
+                                        {userServices.mechanic_name}
                                     </p>
-                                    <p className="text-start my-2 mx-1">
-                                        <span className="font-bold">
-                                            Mechanic license:
-                                        </span>{" "}
-                                        {service.mechanicLicense}
-                                    </p>
+
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Mechanic contact:
                                         </span>{" "}
-                                        {service.mechanicPhone}
+                                        {userServices.mechanic_phone}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Mechanic location:
                                         </span>{" "}
-                                        {service.location}
+                                        {userServices.mechanic_location}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Request date:
                                         </span>{" "}
-                                        {service.date}
+                                        {userServices.request_date}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Issue description:
                                         </span>{" "}
-                                        {service.issueDescription}
+                                        {userServices.issue_description}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Charges:
                                         </span>{" "}
-                                        {service.charges}
+                                        {userServices.charges}
                                     </p>
                                     <p
                                         className={`text-start my-2 mx-1 font-bold ${getPaymentStatus(
-                                            service.paymentStatus
+                                            userServices.payment_status
                                         )}`}
                                     >
                                         <span className="font-bold text-black">
                                             Payment status:
                                         </span>{" "}
-                                        {service.paymentStatus}
+                                        {userServices.payment_status}
                                     </p>
                                     <p className="text-start my-2 mx-1">
                                         <span className="font-bold">
                                             Paid date:
                                         </span>{" "}
-                                        {service.paidDate}
-                                    </p>
-                                    <p className="text-start my-2 mx-1">
-                                        <span className="font-bold">
-                                            Payment reciept:
-                                        </span>{" "}
-                                        {service.reciept}
+                                        {userServices.paid_date}
                                     </p>
                                 </div>
                                 <div className=" items-center justify-center my-8">
@@ -138,14 +160,20 @@ const PreviousRequestDetails = () => {
                                     </h2>
                                     <button
                                         className={`bg-blue-600 hover:bg-blue-400 rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ${getServiceStatus(
-                                            service.status
+                                            userServices.status
                                         )}`}
                                     >
-                                        {service.status}
+                                        {userServices.status}
                                     </button>
                                 </div>
                             </div>
                             <div>
+                                {success && (
+                                    <p className="text-green-600 bg-green-100 p-2 mb-4 text-center rounded fixed bottom-0 left-0 right-0">
+                                        ✅ Your feedback has been sent
+                                        successfully!
+                                    </p>
+                                )}
                                 <h2 className=" text-4xl font-bold text-center justify-center w-full text-slate-950">
                                     User feedback:
                                 </h2>
@@ -156,6 +184,9 @@ const PreviousRequestDetails = () => {
                                     <textarea
                                         className="feedback border border-gray-400 rounded-md p-2 w-full"
                                         name="feedback"
+                                        onChange={(e) =>
+                                            setMessage(e.target.value)
+                                        }
                                         placeholder="Write your feedback here"
                                         id=""
                                         // cols="25"
@@ -163,6 +194,7 @@ const PreviousRequestDetails = () => {
                                     ></textarea>
                                     <button
                                         type="submit"
+                                        onClick={sendFeedback}
                                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg w-40 right-0 place-self-center my-8"
                                     >
                                         Submit

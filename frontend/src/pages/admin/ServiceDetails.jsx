@@ -25,7 +25,7 @@ const ServiceDetails = () => {
 
     // payment status
     const getPaymentStatus = () => {
-        switch (service.paymentStatus) {
+        switch (service.payment_status) {
             case "completed":
                 return "text-green-500 hover:text-green-600 ";
             case "in progress":
@@ -46,7 +46,7 @@ const ServiceDetails = () => {
                 <div className="profile-details items-center justify-center text-center">
                     <div className="image">
                         <h2 className=" text-4xl font-bold text-center justify-center w-full text-blue-800">
-                            {service.licensePlate}
+                            {service.license_plate}
                         </h2>
                         <h3 className="text-center text-md font-bold m-2">
                             The details on the card below are the service
@@ -58,55 +58,55 @@ const ServiceDetails = () => {
                                     <span className="text-black">
                                         License plate:
                                     </span>{" "}
-                                    {service.licensePlate}
+                                    {service.license_plate}
                                 </h2>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Vehicle name:
                                     </span>{" "}
-                                    {service.vehicleName}
+                                    {service.vehicle_name}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Vehicle owner:
                                     </span>{" "}
-                                    {service.vehicleOwner}
+                                    {service.vehicle_owner}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Mechanic name:
                                     </span>{" "}
-                                    {service.mechanicName}
+                                    {service.mechanic_name}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Mechanic license:
                                     </span>{" "}
-                                    {service.mechanicLicense}
+                                    {service.mechanic_license}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Mechanic contact:
                                     </span>{" "}
-                                    {service.mechanicPhone}
+                                    {service.mechanic_phone}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Mechanic location:
                                     </span>{" "}
-                                    {service.location}
+                                    {service.mechanic_location}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Request date:
                                     </span>{" "}
-                                    {service.date}
+                                    {service.request_date}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Issue description:
                                     </span>{" "}
-                                    {service.issueDescription}
+                                    {service.issue_description}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">Charges:</span>{" "}
@@ -114,39 +114,39 @@ const ServiceDetails = () => {
                                 </p>
                                 <p
                                     className={`text-start my-2 mx-1 font-bold ${getPaymentStatus(
-                                        service.paymentStatus
+                                        service.payment_status
                                     )}`}
                                 >
                                     <span className="font-bold text-black">
                                         Payment status:
                                     </span>{" "}
-                                    {service.paymentStatus}
+                                    {service.payment_status}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Paid date:
                                     </span>{" "}
-                                    {service.paidDate}
+                                    {service.paid_date}
                                 </p>
                                 <p className="text-start my-2 mx-1">
                                     <span className="font-bold">
                                         Payment reciept:
                                     </span>{" "}
-                                    {service.reciept}
+                                    {service.payment_receipt}
                                 </p>
                             </div>
-                        </div>
-                        <div className=" items-center justify-center my-8">
-                            <h2 className=" text-4xl font-bold text-center justify-center w-full ">
-                                Service status:{" "}
-                            </h2>
-                            <button
-                                className={`bg-blue-600 hover:bg-blue-400 rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ${getServiceStatus(
-                                    service.status
-                                )}`}
-                            >
-                                {service.status}
-                            </button>
+                            <div className=" items-center justify-center my-8">
+                                <h2 className=" text-4xl font-bold text-center justify-center w-full ">
+                                    Service status:{" "}
+                                </h2>
+                                <button
+                                    className={`bg-blue-600 hover:bg-blue-400 rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ${getServiceStatus(
+                                        service.status
+                                    )}`}
+                                >
+                                    {service.status}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

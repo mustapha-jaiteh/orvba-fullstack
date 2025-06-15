@@ -61,14 +61,6 @@ function Home() {
                             needs. It aims to reduce time and cost for our users
                             to find mechanics during breakdowns.
                         </p>
-                        <NavLink to={"/admin_dashboard"}>
-                            <button
-                                className=" bg-blue-600 rounded-md border-gray-300  py-2 px-2 w-60  lg:w-60 font-bold text-gray-100 hover:bg-blue-400"
-                                // onClick={handleLoginPopup}
-                            >
-                                Admin dashboard
-                            </button>
-                        </NavLink>
                     </div>
                 </header>
                 <main className="  flex flex-col py-8 px-6 my-2  lg:my-4 bg-cover bg-center border-t-8 border-slate-950 w-full ">
@@ -106,7 +98,7 @@ function Home() {
                                     with vehicle owners nationwide.
                                 </p>
 
-                                <Link to="/admin">
+                                <Link to="/mechanic_register">
                                     <button className=" bg-red-700 hover:bg-red-400 text-white font-bold p-2 rounded mt-4 left-0 ">
                                         Register as a mechanic
                                     </button>

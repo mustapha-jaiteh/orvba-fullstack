@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('vehicle_name');
             $table->string('vehicle_model');
             $table->integer('vehicle_year');
-            $table->string('license_plate');
+            $table->string('license_plate')->unique();
             $table->string('vehicle_type');
             $table->string('username');
             $table->string('password');

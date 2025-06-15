@@ -71,20 +71,20 @@ const Router = () => {
 
                 {
                     path: "mechanics",
-                    element: <Mechanics mechanics={mechanics} />,
+                    element: <Mechanics />,
                 },
                 {
                     path: "mechanics/:id",
                     element: <MechanicDetails />,
                 },
-                { path: "users", element: <Users users={users} /> },
+                { path: "users", element: <Users /> },
                 {
                     path: "users/:id",
                     element: <UserDetails />,
                 },
                 {
                     path: "bookings",
-                    element: <Bookings bookings={bookings} />,
+                    element: <Bookings />,
                 },
                 {
                     path: "bookings/:id",

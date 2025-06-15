@@ -4,10 +4,8 @@ import { useAdminContext } from "../../contexts/AdminContext";
 import AdminPages from "../../components/admin/AdminPages";
 
 const MechanicDetails = () => {
-    // let params = useParams();
-    // const mechanicId = params.id;
-    // let mechanic = getMechanicById(mechanicId);
-    const { mechanics, services } = useAdminContext();
+    const { mechanics, services, bookings, feedback } = useAdminContext();
+    console.log("User feedback", feedback);
 
     const { id } = useParams(); // Get the id from the URL
     const mechanic = mechanics.find((item) => item.id === parseInt(id));
@@ -15,11 +13,15 @@ const MechanicDetails = () => {
     const mechanicServices = services.filter(
         (service) => service.mechanicLicense === mechanic.certificationNumber
     );
+    //bookings assigned to the mechanic
+    const assignedBookings = bookings.filter(
+        (booking) => booking.mechanicLicense === mechanic.certificationNumber
+    );
 
     //number of services in the last 6 months
-    const sixMonthsAgo = new Date();cz
+    const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    const jobOrder = mechanicServices.filter(
+    const jobOrder = assignedBookings.filter(
         (service) => new Date(service.date) >= sixMonthsAgo
     ).length;
 
@@ -34,11 +36,15 @@ const MechanicDetails = () => {
             new Date(latest.date) > new Date(current.date) ? latest : current,
         { date: "No service data available for this mechanic." }
     );
-    // if (!latestService) {
-    //     return <p>No service data available for this mechanic.</p>;
-    // }
+
+    const feedbackMessage = feedback.find(
+        (feed) => feed.service_id === latestService.id
+    );
+
+    console.log("Feedback message:", feedbackMessage?.message);
+
     // Determine button class based on status
-    // const statusClass = latestService.status;
+
     const getStatusClass = () => {
         switch (latestService.status) {
             case "completed":
@@ -107,48 +113,56 @@ const MechanicDetails = () => {
                                 Full Details:
                             </h1>
                             <h2 className="name font-bold">
-                                <span className="font-bold">
+                                <span className="font-bold text-gray-400">
                                     Mechanic name:{" "}
                                 </span>{" "}
                                 {mechanic.name}
                             </h2>
                             <p>
                                 {" "}
-                                <span className="font-bold">Email:</span>{" "}
+                                <span className="font-bold text-gray-400">
+                                    Email:
+                                </span>{" "}
                                 {mechanic.email}
                             </p>
                             <p>
-                                <span className="font-bold">Phone:</span>{" "}
+                                <span className="font-bold text-gray-400">
+                                    Phone:
+                                </span>{" "}
                                 {mechanic.phone}
                             </p>
                             <p>
-                                <span className="font-bold">
+                                <span className="font-bold text-gray-400">
                                     Street Address:
                                 </span>{" "}
-                                {mechanic.streetAddress}
+                                {mechanic.street_address}
                             </p>
                             <p>
-                                <span className="font-bold">City:</span>{" "}
+                                <span className="font-bold text-gray-400">
+                                    City:
+                                </span>{" "}
                                 {mechanic.city}
                             </p>
                             <p>
-                                <span className="font-bold">Region:</span>{" "}
+                                <span className="font-bold text-gray-400">
+                                    Region:
+                                </span>{" "}
                                 {mechanic.region}
                             </p>
                             <p>
-                                <span className="font-bold">
+                                <span className="font-bold text-gray-400">
                                     License Number:
                                 </span>{" "}
-                                {mechanic.certificationNumber}
+                                {mechanic.mechanic_license}
                             </p>
                             <p>
-                                <span className="font-bold">
+                                <span className="font-bold text-gray-400">
                                     Years of experience:
                                 </span>{" "}
-                                {mechanic.yearsOfExperience}
+                                {mechanic.years_of_experience}
                             </p>
                             <p>
-                                <span className="font-bold">
+                                <span className="font-bold text-gray-400">
                                     Specialization:
                                 </span>{" "}
                                 {mechanic.specialization}
@@ -229,9 +243,7 @@ const MechanicDetails = () => {
                                 </h3>
 
                                 <p className="text-gray-400">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Repellendus nisi in alias
-                                    dolore saepe, quia ullam.
+                                    {feedbackMessage.message}
                                 </p>
                             </div>
                         </div>

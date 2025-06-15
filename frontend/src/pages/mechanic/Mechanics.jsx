@@ -2,8 +2,10 @@ import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import AdminPages from "../../components/admin/AdminPages";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
+import { useAdminContext } from "../../contexts/AdminContext";
 
-const Mechanics = ({ mechanics }) => {
+const Mechanics = () => {
+    const { mechanics } = useAdminContext();
     // const mechanics = useLoaderData();
     // console.log(mechanics);
     return (
@@ -65,7 +67,7 @@ const Mechanics = ({ mechanics }) => {
                                         {mechanic.city}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {mechanic.streetAddress}
+                                        {mechanic.street_address}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
                                         {mechanic.phone}

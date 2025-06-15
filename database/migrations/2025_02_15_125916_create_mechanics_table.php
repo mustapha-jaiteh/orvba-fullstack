@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('street_address');
             $table->string('city');
             $table->string('region');
-            $table->string('mechanic_license');
+            $table->string('mechanic_license')->unique();
             $table->string('years_of_experience');
             $table->integer('specialization');
              $table->string('username');

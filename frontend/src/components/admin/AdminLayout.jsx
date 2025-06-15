@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import logo from "/images/car-2.png";
-
+import { useNavigate } from "react-router-dom";
 import {
     Disclosure,
     DisclosureButton,
@@ -13,6 +13,8 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Footer from "../Footer";
+import { useContext } from "react";
+import { useAdminContext } from "../../contexts/AdminContext";
 
 const user = {
     name: "mustik",
@@ -28,23 +30,24 @@ const navigation = [
     { name: "Payments", to: "payments" },
 ];
 
-const handleLogout = (ev) => {
-    ev.preventDefault();
-    // localStorage.removeItem("token");
-    // window.location.href = "/";
-    console.log("logout");
-};
-const userNavigation = [
-    { name: "Your Profile", to: "/" },
-    { name: "Settings", to: "/" },
-    { name: "Sign out", to: "/" },
-];
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
 export default function AdminLayout() {
+    const navigate = useNavigate();
+    const { handleLogout } = useAdminContext();
+
+    const userNavigation = [
+        { name: "Your Profile", to: "/" },
+        {
+            name: "Sign out",
+            onClick: () => {
+                handleLogout(); // Call logout from context
+                navigate("/", { replace: true });
+            },
+        },
+    ];
     return (
         <>
             <div className="min-h-full">
@@ -126,13 +129,10 @@ export default function AdminLayout() {
                                             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                         >
                                             {userNavigation.map((item) => (
-                                                <MenuItem
-                                                    key={item.name}
-                                                    to={item.to}
-                                                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                                                >
+                                                <MenuItem key={item.name}>
                                                     <a
-                                                        // href="#"
+                                                        href="#"
+                                                        onClick={item.onClick}
                                                         className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                                     >
                                                         {item.name}
@@ -220,8 +220,8 @@ export default function AdminLayout() {
                                 {userNavigation.map((item) => (
                                     <DisclosureButton
                                         key={item.name}
-                                        as="a"
-                                        href={item.href}
+                                        href=""
+                                        onClick={item.onClick}
                                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                                     >
                                         {item.name}

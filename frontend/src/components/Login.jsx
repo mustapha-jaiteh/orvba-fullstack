@@ -58,19 +58,11 @@ const Login = ({ handleLoginClose }) => {
 
             console.log("Extracted User & Role:", userData, role); // ✅ Debugging
 
-            // if (!userData || !role) {
-            //     console.error("Invalid response structure", response.data);
-            //     setError("Login failed: Invalid response structure.");
-            //     return;
-            // }
-
             if (role === "user") {
                 userLogin(userData, token);
-                console.log("Navigating to /user-dashboard");
                 navigate("/user_dashboard", { replace: true });
             } else if (role === "mechanic") {
                 mechanicLogin(userData, token);
-                console.log("Navigating to /mechanic-dashboard");
                 navigate("/mechanic_dashboard", { replace: true });
             } else {
                 console.log("Unknown role:", role);

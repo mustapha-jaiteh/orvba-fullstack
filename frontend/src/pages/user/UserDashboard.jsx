@@ -19,13 +19,13 @@ const UserDashboard = () => {
     const userServices = services.filter(
         (service) => service.license_plate === user.license_plate
     );
-    //fetch the latest service for the user
-    const currentService = userServices.find(
-        (service) =>
-            service.status === "in progress" &&
-            service.license_plate === user.license_plate
+    //current service status
+    const currentService = userServices.reduce(
+        (latest, current) =>
+            new Date(latest.date) > new Date(current.date) ? latest : current,
+        { date: "No service data available for this mechanic." }
     );
-
+    //
     //the number of bookings made by the user
     const userBookings = bookings.filter(
         (booking) => booking.license_plate === user.license_plate
@@ -146,7 +146,7 @@ const UserDashboard = () => {
                     {currentService ? (
                         <div>
                             <h1 className="text-2xl font-bold text-center justify-center w-full">
-                                current service details:
+                                Latest service details:
                             </h1>
 
                             <p className="text-start my-2 mx-1">
@@ -160,7 +160,7 @@ const UserDashboard = () => {
                                 <span className="font-bold">
                                     Request date:
                                 </span>{" "}
-                                {currentService.date}
+                                {currentService.request_date}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
@@ -172,7 +172,7 @@ const UserDashboard = () => {
                                 <span className="font-bold">
                                     Mechanic location:
                                 </span>{" "}
-                                {currentService.location}
+                                {currentService.mechanic_location}
                             </p>
                             <p>
                                 <span className="font-bold">

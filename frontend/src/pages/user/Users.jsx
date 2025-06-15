@@ -2,8 +2,10 @@ import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import AdminPages from "../../components/admin/AdminPages";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
+import { useAdminContext } from "../../contexts/AdminContext";
 
-const Users = ({ users }) => {
+const Users = () => {
+    const { users } = useAdminContext();
     // const users = useLoaderData();
     // console.log(users);
     return (
@@ -35,7 +37,7 @@ const Users = ({ users }) => {
                                     Phone
                                 </th>
                                 <th className="p-2 border-x border-white">
-                                    Vehicle Mark
+                                    Vehicle Name
                                 </th>
                                 <th className="p-2 border-x border-white">
                                     License Plate
@@ -61,10 +63,10 @@ const Users = ({ users }) => {
                                         {user.phone}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {user.vehicleName}
+                                        {user.vehicle_name}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {user.licensePlate}
+                                        {user.license_plate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
                                         <Link

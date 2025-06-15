@@ -73,22 +73,22 @@ const Payments = () => {
                                     className="border-b-2 border-gray-300 bg-gray-100 pl-2 text-center"
                                 >
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.licensePlate}
+                                        {payment.license_plate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.vehicleOwner}
+                                        {payment.vehicle_owner}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.date}
+                                        {payment.request_date}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.paidDate}
+                                        {payment.paid_date}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.mechanicName}
+                                        {payment.mechanic_name}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.mechanicPhone}
+                                        {payment.mechanic_phone}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
                                         {payment.charges}
@@ -99,10 +99,10 @@ const Payments = () => {
                                         )}`}
                                     > */}
                                     <td className="p-2 border-x border-gray-300 font-bold">
-                                        {payment.paymentStatus}
+                                        {payment.payment_status}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {payment.reciept}
+                                        {payment.payment_receipt}
                                     </td>
                                 </tr>
                             ))}

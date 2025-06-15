@@ -15,5 +15,8 @@ class Booking extends Model
         'city',
         'issue_description',
         'date',
+        'mechanic_license',
+        'mechanic_name',
+        'assigned',
     ];
 }

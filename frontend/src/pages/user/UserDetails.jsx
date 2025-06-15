@@ -15,10 +15,25 @@ const UserDetails = () => {
     const userServices = services.filter(
         (service) => service.licensePlate === user.licensePlate
     );
-    //fetch the latest service for the user
-    const currentService = userServices.find(
-        (service) => service.status === "in progress"
+    //current service status
+    const currentService = userServices.reduce(
+        (latest, current) =>
+            new Date(latest.date) > new Date(current.date) ? latest : current,
+        { date: "No service data available for this mechanic." }
     );
+    // Determine button class based on service status
+    const getServiceStatus = () => {
+        switch (currentService.status) {
+            case "completed":
+                return "bg-green-500 hover:bg-green-600 text-white";
+            case "in progress":
+                return "bg-blue-500 hover:bg-blue-600 text-white";
+            case "pending":
+                return "bg-yellow-500 hover:bg-yellow-600 text-white";
+            default:
+                return "bg-gray-500 hover:bg-gray-600 text-white";
+        }
+    };
 
     //the number of bookings made by the user
     const userBookings = bookings.filter(
@@ -56,7 +71,7 @@ const UserDetails = () => {
                                 <span className="font-bold">
                                     Street address:
                                 </span>{" "}
-                                {user.streetAddress}
+                                {user.street_address}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">City:</span>{" "}
@@ -70,23 +85,23 @@ const UserDetails = () => {
 
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Vehicle name:</span>{" "}
-                                {user.vehicleName}
+                                {user.vehicle_name}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     License plate:
                                 </span>{" "}
-                                {user.licensePlate}
+                                {user.license_plate}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     Vehicle model:
                                 </span>{" "}
-                                {user.vehicleModel}
+                                {user.vehicle_model}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Vehicle year:</span>{" "}
-                                {user.vehicleYear}
+                                {user.vehicle_year}
                             </p>
                         </div>
                     </div>
@@ -103,38 +118,38 @@ const UserDetails = () => {
                                 <span className="font-bold">
                                     License plate:{" "}
                                 </span>{" "}
-                                {currentService.licensePlate}
+                                {currentService.license_plate}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 {" "}
                                 <span className="font-bold">
                                     Request date:
                                 </span>{" "}
-                                {currentService.date}
+                                {currentService.request_date}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     Mechanic name:
                                 </span>{" "}
-                                {currentService.mechanicName}
+                                {currentService.mechanic_name}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     Mechanic location:
                                 </span>{" "}
-                                {currentService.location}
+                                {currentService.mechanic_location}
                             </p>
                             <p>
                                 <span className="font-bold">
                                     Mechanic contact:
                                 </span>{" "}
-                                {currentService.mechanicPhone}
+                                {currentService.mechanic_phone}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">
                                     Issue description:
                                 </span>{" "}
-                                {currentService.issueDescription}
+                                {currentService.issue_description}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Charges:</span>{" "}
@@ -145,12 +160,24 @@ const UserDetails = () => {
                                 <span className="font-bold">
                                     Payment status:
                                 </span>{" "}
-                                {currentService.paymentStatus}
+                                {currentService.payment_status}
                             </p>
                             <p className="text-start my-2 mx-1">
                                 <span className="font-bold">Paid date:</span>{" "}
-                                {currentService.paidDate}
+                                {currentService.paid_date}
                             </p>
+                            <div className=" text-center justify-center  my-8">
+                                <h2 className=" text-4xl font-bold text-center justify-center w-full ">
+                                    Service status:{" "}
+                                </h2>
+                                <button
+                                    className={` justify-center items-center rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ${getServiceStatus(
+                                        currentService.status
+                                    )}`}
+                                >
+                                    {currentService.status}
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <h1 className="text-4xl font-bold text-center justify-center w-full items-center my-32">

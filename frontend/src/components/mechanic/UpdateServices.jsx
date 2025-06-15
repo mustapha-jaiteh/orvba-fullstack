@@ -5,31 +5,55 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import MechanicPages from "../../components/mechanic/MechanicPages";
 import { useLocation } from "react-router-dom";
+import { useMechanicContext } from "../../contexts/MechanicContext";
+import axios from "axios";
 
 const UpdateServices = ({}) => {
-    // const [status, setStatus] = useState("");
-    // const [charges, setCharges] = useState("");
-    // const [paidDate, setPaidDate] = useState("");
-    // const [receipt, setReceipt] = useState(null);
-    // const [error, setError] = useState("");
-    // const [success, setSuccess] = useState("");
+    const { mechanic, bookings } = useMechanicContext();
+
     const location = useLocation();
-    const { licensePlate } = location.state || {};
+    const booking = location.state?.booking;
 
-    const handleSubmit = (e) => {
+    const [form, setForm] = useState({
+        bookings_id: booking?.id | "",
+        licenswe_plate: booking?.license_plate | "",
+        vehicle_name: booking?.vehicle_name | "",
+        vehicle_owner: booking?.vehicle_owner | "",
+        mechanic_name: booking?.mechanic_name | "",
+        mechanic_license: booking?.mechanic_license | "",
+        mechanic_phone: mechanic?.phone | "",
+        mechanic_location: mechanic?.city | "",
+        request_date: booking?.date | "",
+        issue_description: booking?.issue_description | "",
+        charges: "",
+        status: "",
+        payment_status: "",
+        paid_date: "",
+        payment_receipt: "",
+    });
+
+    const handleChange = (e) => {
+        setForm((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
+    // const location = useLocation();
+    // const { licensePlate } = location.state || {};
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        const updatedData = {
-            licensePlate,
-            status: e.target.status.value,
-            charges: e.target.charges.value,
-            paymentStatus: e.target.paymentStatus.value,
-            paidDate: e.target.paidDate.value,
-            receipt: e.target.receipt.files[0],
-        };
-        console.log("Updated Data:", updatedData);
-
-        // Send updatedData to the backend via an API call
+        console.log(form);
+        try {
+            await axios.post(
+                "http://127.0.0.1:8000/api/mechanic/service-update",
+                form
+            );
+            alert("Service updated successfully!");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update service.");
+        }
     };
 
     return (
@@ -45,25 +69,20 @@ const UpdateServices = ({}) => {
                         <h2 className="text-xl font-bold mb-4">
                             Update Service
                         </h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4">
-                                <label className="block text-sm font-bold">
-                                    License Number
-                                </label>
-                                <input
-                                    type="text"
-                                    value={licensePlate || ""}
-                                    readOnly
-                                    className="w-full border border-gray-300 p-2 rounded bg-gray-100"
-                                />
-                            </div>
+                        <form
+                            onSubmit={handleSubmit}
+                            method="POST"
+                            action="/api/update-service"
+                            encType="multipart/form-data"
+                        >
                             <div className="mb-4">
                                 <label className="block text-sm font-bold">
                                     Service Status
                                 </label>
                                 <select
-                                    name="serviceStatus"
+                                    name="status"
                                     className="w-full border border-gray-300 p-2 rounded"
+                                    onChange={handleChange}
                                 >
                                     <option value="pending">pending</option>
                                     <option value="in progress">
@@ -79,6 +98,8 @@ const UpdateServices = ({}) => {
                                 <input
                                     type="number"
                                     name="charges"
+                                    // value={updatedData.charges}
+                                    onChange={handleChange}
                                     placeholder="Enter charges"
                                     className="w-full border border-gray-300 p-2 rounded"
                                 />
@@ -88,7 +109,8 @@ const UpdateServices = ({}) => {
                                     Payment Status
                                 </label>
                                 <select
-                                    name="serviceStatus"
+                                    name="payment_status"
+                                    onChange={handleChange}
                                     className="w-full border border-gray-300 p-2 rounded"
                                 >
                                     <option value="pending">pending</option>
@@ -104,7 +126,8 @@ const UpdateServices = ({}) => {
                                 </label>
                                 <input
                                     type="date"
-                                    name="paymentDate"
+                                    name="paid_date"
+                                    onChange={handleChange}
                                     className="w-full border border-gray-300 p-2 rounded"
                                 />
                             </div>
@@ -112,15 +135,18 @@ const UpdateServices = ({}) => {
                                 <label className="block text-sm font-bold">
                                     Payment Receipt
                                 </label>
+
                                 <input
                                     type="file"
-                                    name="receipt"
+                                    name="payment_receipt"
+                                    accept="image/*"
                                     className="w-full border border-gray-300 p-2 rounded"
                                 />
                             </div>
                             <div className="items-center justify-center place-self-center">
                                 <button
                                     type="submit"
+                                    onClick={handleSubmit}
                                     className="w-40 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 font-bold"
                                 >
                                     Submit

@@ -21,6 +21,8 @@ return new class extends Migration
         $table->string('city');
         $table->text('issue_description');
         $table->date('date');
+$table->foreign('license_plate')->references('license_plate')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

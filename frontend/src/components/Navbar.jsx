@@ -4,6 +4,7 @@ import React from "react";
 import logo from "/images/car-2.png";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import AdminLogin from "./admin/AdminLogin";
 import { useState, useEffect } from "react";
 
 const Navbar = () => {
@@ -11,7 +12,7 @@ const Navbar = () => {
     //   return "text-black";
     // };
     const [isLoginVisibe, setIsLoginVisible] = useState(false);
-    const [user, setUser] = useState(null);
+    const [isAdminLoginVisible, setIsAdminLoginVisible] = useState(false);
 
     const [isRegisterVisible, setIsRegisterVisible] = useState(false);
 
@@ -27,6 +28,13 @@ const Navbar = () => {
     };
     const handleRegisterClose = () => {
         setIsRegisterVisible(false);
+    };
+
+    const adminLoginOpen = () => {
+        setIsAdminLoginVisible(true);
+    };
+    const adminLoginClose = () => {
+        setIsAdminLoginVisible(false);
     };
 
     return (
@@ -68,6 +76,16 @@ const Navbar = () => {
                     </button>
                     {isLoginVisibe ? (
                         <Login handleLoginClose={handleLoginClose} />
+                    ) : null}
+                    {/* </Link> */}
+                    <button
+                        className=" bg-blue-600 rounded-md border-gray-300  py-2 px-2 w-32  lg:w-32 font-bold text-gray-100 hover:bg-blue-400"
+                        onClick={adminLoginOpen}
+                    >
+                        Admin login
+                    </button>
+                    {isAdminLoginVisible ? (
+                        <AdminLogin adminLoginClose={adminLoginClose} />
                     ) : null}
                     {/* </Link> */}
                 </div>

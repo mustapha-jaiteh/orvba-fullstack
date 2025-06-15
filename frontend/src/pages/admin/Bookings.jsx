@@ -1,8 +1,11 @@
 import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import AdminPages from "../../components/admin/AdminPages";
+import { useState } from "react";
+import { useAdminContext } from "../../contexts/AdminContext";
 
-const Bookings = ({ bookings }) => {
+const Bookings = () => {
+    const { bookings } = useAdminContext();
     // const bookings = useLoaderData();
     return (
         <AdminPages title="Bookings">
@@ -48,16 +51,16 @@ const Bookings = ({ bookings }) => {
                                     className="border-b-2 border-gray-300 bg-gray-100 pl-2  items-center text-center"
                                 >
                                     <td className="p-2 border-x border-gray-300">
-                                        {book.vehicleName}
+                                        {book.vehicle_name}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {book.licensePlate}
+                                        {book.license_plate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {book.vehicleOwner}
+                                        {book.vehicle_owner}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {book.location}
+                                        {book.city}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
                                         {book.date}

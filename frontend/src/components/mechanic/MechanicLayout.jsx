@@ -118,7 +118,7 @@ export default function MechanicLayout() {
                                                 </span>
                                                 <img
                                                     alt=""
-                                                    src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
+                                                    // src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
                                                     className="size-8 rounded-full"
                                                 />
                                             </MenuButton>
@@ -189,7 +189,7 @@ export default function MechanicLayout() {
                                 <div className="shrink-0">
                                     <img
                                         alt=""
-                                        src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
+                                        // src={`http://127.0.0.1:8000/storage/${mechanic.profile_image}`}
                                         className="size-10 rounded-full"
                                     />
                                 </div>

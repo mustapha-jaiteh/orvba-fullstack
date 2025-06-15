@@ -51,19 +51,19 @@ const Services = ({ services }) => {
                                     className="border-b-2 border-gray-300 bg-gray-100 pl-2 text-center"
                                 >
                                     <td className="p-2 border-x border-gray-300">
-                                        {service.licensePlate}
+                                        {service.license_plate}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {service.vehicleName}
+                                        {service.vehicle_name}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {service.vehicleOwner}
+                                        {service.vehicle_owner}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {service.date}
+                                        {service.request_date}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
-                                        {service.mechanicName}
+                                        {service.mechanic_name}
                                     </td>
                                     <td className="p-2 border-x border-gray-300">
                                         {service.status}

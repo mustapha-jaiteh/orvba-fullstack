@@ -10,6 +10,9 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Booking;
+use App\Models\Service;
 
 
 class MechanicController extends Controller
@@ -64,6 +67,64 @@ class MechanicController extends Controller
     ]);
 
     return response()->json(['message' => 'Mechanic registered successfully', 'mechanic' => $mechanic], 201);
+}
+//get the assigned bookings
+public function getAssignedBookings($license)
+{
+    $bookings = Booking::where('mechanic_license', $license)->get();
+
+    if ($bookings->isEmpty()) {
+        return response()->json(['message' => 'No bookings assigned.'], 404);
+    }
+
+    return response()->json($bookings, 200);
+}
+
+ // update service
+public function updateService(Request $request)
+{
+    $validated = $request->validate([
+        'booking_id' => 'required|integer',
+        'license_plate' => 'required|string',
+        'vehicle_name' => 'required|string',
+        'vehicle_owner' => 'required|string',
+        'mechanic_name' => 'required|string',
+        'mechanic_license' => 'required|string',
+        'mechanic_phone' => 'required|string',
+        'mechanic_location' => 'required|string',
+        'request_date' => 'required|date',
+        'issue_description' => 'required|string',
+        'status' => 'required|string',
+        'charges' => 'nullable|numeric',
+        'payment_status' => 'nullable|string',
+        'paid_date' => 'nullable|date',
+         'payment_receipt' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    if ($request->hasFile('payment_receipt')) {
+        $filename = time() . '_' . $request->file('payment_receipt')->getClientOriginalName();
+        $path = $request->file('payment_receipt')->storeAs('receipts', $filename, 'public');
+        $validated['payment_receipt'] = $path;
+    }
+
+    $service = Service::create($validated); // assuming Service model
+
+    return response()->json([
+        'message' => 'Service updated successfully',
+        'data' => $service
+    ]);
+}
+
+//get mechanic services
+public function getMechanicServices($license)
+{
+    $services = Service::where('mechanic_license', $license)->get();
+
+    if ($services->isEmpty()) {
+        return response()->json(['message' => 'No services for the mechanic.'], 404);
+    }
+
+    return response()->json($services, 200);
 }
 
 }

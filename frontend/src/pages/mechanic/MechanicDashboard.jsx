@@ -3,29 +3,50 @@ import { NavLink, useParams } from "react-router-dom";
 import { useAdminContext } from "../../contexts/AdminContext";
 import { useMechanicContext } from "../../contexts/MechanicContext";
 import MechanicPages from "../../components/mechanic/MechanicPages";
+import { useState, useEffect } from "react";
 
 const MechanicDashboard = () => {
-    const { mechanics, services } = useAdminContext();
-    const { mechanic } = useMechanicContext();
-
-    // const { id } = useParams();
-    // const mechanic = mechanics.find((item) => item.id === 1);
+    const { feedback } = useAdminContext();
+    const { mechanic, bookings, services } = useMechanicContext(); // contains mechanic_license
 
     //number of services in the last 6 months
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    const jobOrder = services.filter(
-        (service) =>
-            service.mechanic_license === mechanic.certification_number &&
-            new Date(service.date) >= sixMonthsAgo
+    const jobOrder = bookings.filter(
+        (book) => new Date(book.date) >= sixMonthsAgo
     ).length;
 
     //total services completed
     const completedServices = services.filter(
         (service) =>
-            service.mechanic_license === mechanic.certification_number &&
+            service.mechanic_license === mechanic.mechanic_license &&
             service.status === "completed"
     ).length;
+
+    //current service status
+    const currentService = services.reduce(
+        (latest, current) =>
+            new Date(latest.date) > new Date(current.date) ? latest : current,
+        { date: "No service data available for this mechanic." }
+    );
+
+    const feedbackMessage = feedback.find(
+        (feed) => feed.service_id === currentService.id
+    );
+    //
+    // Determine button class based on service status
+    const getServiceStatus = () => {
+        switch (currentService.status) {
+            case "completed":
+                return "bg-green-500 hover:bg-green-600 text-white";
+            case "in progress":
+                return "bg-blue-500 hover:bg-blue-600 text-white";
+            case "pending":
+                return "bg-yellow-500 hover:bg-yellow-600 text-white";
+            default:
+                return "bg-gray-500 hover:bg-gray-600 text-white";
+        }
+    };
 
     return (
         <>
@@ -74,6 +95,13 @@ const MechanicDashboard = () => {
                                         </span>{" "}
                                         {mechanic.specialization}
                                     </p>
+                                    {/* checking */}
+                                    {/* <p className="text-start my-2 mx-1">
+                                        <span className="font-bold">
+                                            certificate Number:
+                                        </span>{" "}
+                                        {mechanic.mechanic_license}
+                                    </p> */}
                                 </div>
                             </div>
                             <div className="card2 bg-gray-50 flex flex-col lg:flex-row items-center justify-center m-4  gap-2 shadow-2xl bg-transparent rounded-2xl shadow-slate-950 p-2 relative mt-12">
@@ -104,11 +132,16 @@ const MechanicDashboard = () => {
                                 <h3 className="font-bold text-sm text-center">
                                     Current service status
                                 </h3>
-                                <button className="bg-blue-500 text-white text-xl p-2 rounded-lg w-40">
-                                    in progress
+                                <button
+                                    className={` justify-center items-center rounded-3xl border-gray-300 shadow-md  w-40 font-bold lg:w-60 h-12 lg:h-16 text-gray-100  mt-8 ${getServiceStatus(
+                                        currentService.status
+                                    )}`}
+                                >
+                                    {currentService.status}
                                 </button>
                                 <p className="text-gray-400">
-                                    requested date: 02/18/2024
+                                    requested date:{" "}
+                                    {currentService.request_date}
                                 </p>
                             </div>
                             <div className="job-order h-40 lg:h-48 bg-gradient-to-r from-slate-950 to-slate-700 text-white flex flex-col m-4  gap-2 shadow-2xl bg-transparent  rounded-2xl shadow-slate-950 p-2  items-center justify-center">
@@ -149,9 +182,7 @@ const MechanicDashboard = () => {
                                 </h3>
 
                                 <p className="text-gray-400">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Repellendus nisi in alias
-                                    dolore saepe, quia ullam.
+                                    {feedbackMessage.message}
                                 </p>
                             </div>
                         </div>

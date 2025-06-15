@@ -49,5 +49,17 @@ class AuthController extends Controller
 
     return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
 }
+
+//get the user service
+public function getUserServices($plate)
+{
+    $services = User::where('license_plate', $plate)->get();
+
+    if ($services->isEmpty()) {
+        return response()->json(['message' => 'No services for the user.'], 404);
+    }
+
+    return response()->json($services, 200);
+}
     
 }

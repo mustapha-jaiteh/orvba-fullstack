@@ -31,16 +31,24 @@ export const UserProvider = ({ children }) => {
         localStorage.removeItem("authToken");
         localStorage.removeItem("userData");
     };
-    // // 🔹 Load user from localStorage on app startup
-    // useEffect(() => {
-    //     const storedUser = localStorage.getItem("user");
-    //     if (storedUser) {
-    //         setUser(JSON.parse(storedUser));
-    //     }
-    // }, []);
+
+    const [services, setServices] = useState([]);
+
+    //fetch user services
+    useEffect(() => {
+        if (!user?.license_plate) return;
+
+        fetch(`http://127.0.0.1:8000/api/user/services/${user.license_plate}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (Array.isArray(data)) setServices(data);
+                else console.warn(data.message);
+            })
+            .catch((err) => console.error("Error fetching bookings:", err));
+    }, [user]);
 
     return (
-        <UserContext.Provider value={{ user, token, login, logout }}>
+        <UserContext.Provider value={{ user, services, token, login, logout }}>
             {children}
         </UserContext.Provider>
     );
