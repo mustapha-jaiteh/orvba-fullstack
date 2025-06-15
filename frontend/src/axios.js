@@ -28,7 +28,7 @@ import Router from "../router";
 
 // Create an instance of Axios with base URL
 const axiosClient = axios.create({
-    baseURL: "http://127.0.0.1:8000/api", // Laravel API base URL
+    baseURL: import.meta.env.VITE_API_BASE_URL, // Laravel API base URL
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
