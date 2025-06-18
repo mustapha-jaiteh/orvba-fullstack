@@ -2,7 +2,7 @@
 return [
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://breakdown-assist.netlify.app'],
+    'allowed_origins' => ['https://breakdown-assist.netlify.app'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
